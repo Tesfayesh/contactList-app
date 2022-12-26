@@ -54,7 +54,8 @@ app.get('/get-contact', async (req, res) =>{
 // update Route
 
 app.patch('/update-contact/:id', async (req, res) =>{
-    const updatedContact = await ContactList.findByIdAndUpdate(req.params.id, req.body, {
+   const { id } = req.params
+     const updatedContact = await ContactList.findOneAndUpdate(id, req.body, {
         new : true,
         runValidators : true
     })
@@ -67,7 +68,7 @@ app.patch('/update-contact/:id', async (req, res) =>{
        }) 
     } catch (error) {
         console.log(error)
-    }
+    } 
 })
 
 // Delete Route
