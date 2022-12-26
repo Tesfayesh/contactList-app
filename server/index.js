@@ -32,7 +32,7 @@ app.post('/add-contact', async(req, res) =>{
 
 // get route
 
-app.get('/get-contact', async (req, res) =>{
+ app.get('/get-contact', async (req, res) =>{
    const contactNumbers = await ContactList.find({})
     try {
         res.status(200).json({
@@ -49,11 +49,25 @@ app.get('/get-contact', async (req, res) =>{
         })
     }
 
-})
+}) 
 
 // update Route
 
-app.patch('/update-contact/:id', async (req, res) =>{
+app.put("/update-contact", async (req, res) =>{
+    const newPhone = req.body.newPhone
+    const id = req.body.id
+    try {
+        await ContactList.findById(id, (error, updateContact) =>{
+            updateContact.phone = Number(newPhone)
+            updateContact.save()
+        })
+    } catch (error) {
+        console.log(error)
+        
+    }
+})
+
+/* app.p('/update-contact/:id', async (req, res) =>{
    const { id } = req.params
      const updatedContact = await ContactList.findOneAndUpdate(id, req.body, {
         new : true,
@@ -69,7 +83,7 @@ app.patch('/update-contact/:id', async (req, res) =>{
     } catch (error) {
         console.log(error)
     } 
-})
+}) */
 
 // Delete Route
 
