@@ -8,18 +8,19 @@ function App() {
   const [newPhone, setNewPhone] = useState(0)
   const [contactList, setContactList] = useState([])
 
-  const addNewContact = () => {
-    Axios.post('http://localhost:8080/add-contact', {name, phone})
-  }
-
-  useEffect(() =>{
+    useEffect(() =>{
     Axios.get('http://localhost:8080/get-contact').then ( res =>{
       setContactList(res.data.data.contactNumbers)
     })
   },[])
 
+  const addNewContact = () => {
+    Axios.post('http://localhost:8080/add-contact', {...contactList,name, phone})
+  }
+
+
   const updatePhone = (id) => {
-    Axios.put('http://localhost:8080/update-contact', {id, newPhone})
+    Axios.put(`http://localhost:8080/update-contact/${id}`, {id, newPhone})
   }
 
   const deletePhone = (id) => {
@@ -36,15 +37,9 @@ function App() {
       <button onClick={addNewContact}>Add new Contact</button>
 
 
+
       <h1>Contact List</h1>
-      {
-        contactList.map((val,key) => {
-          return <div key={key} className='phone'>
-            <h1>{val.name}</h1>
-            <h1>{val.phone}</h1>
-          </div>
-        })
-      }
+      
 
       {
         contactList.map((val,key) => {
@@ -56,8 +51,8 @@ function App() {
               placeholder ='Update contact list...'  
               onChange={(e) => {setNewPhone(e.target.value)}}
             />
-               <button className='update-btn' onClick={() => {updatePhone(val._id)}}>Update</button>
-               <button className='delete-btn' onClick={() => {deletePhone(val._id)}}>Delete</button>
+                    <button className='update-btn' onClick={() => {updatePhone(val._id)}}>Update</button>
+                    <button className='delete-btn' onClick={() => {deletePhone(val._id)}}>Delete</button>
           </div>
         })
       }
