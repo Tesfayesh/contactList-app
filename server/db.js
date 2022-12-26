@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const DB = 'mongodb+srv://tesfaye:letmein!@cluster-mern.arbhcql.mongodb.net/contactList?retryWrites=true&w=majority'
+const DB = 'mongodb+srv://tesfaye:< Password >@cluster-mern.arbhcql.mongodb.net/contactList?retryWrites=true&w=majority'
 
 mongoose.connect(DB, {
     useNewUrlParser: true,
